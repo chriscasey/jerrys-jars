@@ -212,19 +212,28 @@ main {
 .feature-card a { color: var(--aqua); }
 
 /* ── Collection page ── */
-.collection-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+main.collection-main {
+  padding-top: 2rem;
 }
 
-.collection-header h1 {
-  font-size: 2rem;
-  color: var(--green-dark);
-  font-weight: normal;
+.collection-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.collection-header-img {
+  max-width: 640px;
+  width: 100%;
+  height: auto;
+}
+
+.collection-search-row {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .search-wrap {
@@ -239,7 +248,7 @@ main {
   font-size: 0.95rem;
   background: var(--white);
   color: var(--text);
-  width: 220px;
+  width: 360px;
   transition: border-color 0.15s, box-shadow 0.15s;
   outline: none;
 }
