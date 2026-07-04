@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection — Jerry's Jars</title>
+  <meta name="description" content="Browse Jerry Ikeda's complete antique fruit jar collection — over 70 rare and unusual specimens.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="site-title"><a href="index.html">Jerry's <span>Jars</span></a></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="collection.html" class="active">Collection</a>
+      <a href="forsale.html">For Sale</a>
+      <a href="wanted.html">Wanted</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="collection-header">
+    <h1>My Jar Collection</h1>
+    <div class="search-wrap">
+      <span class="search-icon">&#x1F50D;</span>
+      <input type="search" id="search" placeholder="Search jars..." aria-label="Search jars">
+    </div>
+  </div>
+  <p class="jar-count" id="jar-count"></p>
+  <div class="jar-grid" id="jar-grid"></div>
+</main>
+
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+  <div class="modal" id="modal">
+    <div class="modal-close"><button id="modal-close-btn" aria-label="Close">&times;</button></div>
+    <img class="modal-img" id="modal-img" src="" alt="">
+    <div class="modal-body">
+      <h2 class="modal-name" id="modal-name"></h2>
+      <p class="modal-desc" id="modal-desc"></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; Jerry Ikeda &mdash; All rights reserved &mdash; <a href="mailto:ikeda.jerry@gmail.com">ikeda.jerry@gmail.com</a></p>
+</footer>
+
+<script>
+const JARS = [{"name":"A.E. Bray","description":"The A.E. Bray jar is a California jar. The patent was given to Ann Elizabeth Bray, who lived in Los Gatos, CA. I need the band for this one, but does have the correct original lid.  Enjoy looking at my collection and please leave a comment.","image":"images/ae_bray.jpg"},{"name":"Air Tight","description":"This is a nice aqua quart Air-Tight Fruit Jar. It is a barrel shaped, blown wax sealer. What is unusual about this one is that it has an \"open\" pontil. This jar normally has an \"iron\" pontil.","image":"images/air_tight.jpg"},{"name":"Cobalt FCG","description":"This deep cobalt blue quart is marked \"F.C.G. Co.\" on the base and there are also three lines. This is the darkest cobalt FCG that I have ever seen and is unlised in the Redbook in this color with the three lines. This jar came out of Al Vignon's collection.","image":"images/cobalt_fcg.jpg"},{"name":"Collins & Chapman Wheeling, W.V.","description":"This aqua 1/2 gallon jar took a metal rim around the neck of jar and a tin lid. There have only been a couple of these jars reported. This one is super crude.  I could use the metal collar that goes on the neckof jar if someone has one.","image":"images/collins_and_chapman.jpg"},{"name":"Eclipse","description":"","image":"images/eclipse.jpg"},{"name":"Flaccus","description":"I have always liked the Flaccus jars. The amber and green one on the left side is embossed \"E.C. Flaccus Co. Tradmark\" with a Stag's head on it. These jars have the correct milkglass domed lids, which also have the Stag's head on them. The amber and green jars on the right are embossed \"Flaccus Bros Steers Head Fruit Jar\" with a Steer's head on it. These have the correct milkglass lid and have a Steer's head on it.","image":"images/flaccus.jpg"},{"name":"Green Mason Patent 1858","description":"This is a nice green Mason 1858 pint fruit jar with a ground lip. I found this jar when they still had a bottle show in San Jose. I kept looking at it and my wife said you better hurry up and buy it before it is gone. Well, you never argue with your wife (ha, ha) so I snatched it up and am really glad that I did.","image":"images/green_mason.jpg"},{"name":"Amber (keystone) Mason 1858 quart","description":"This is a nice crude amber quart that is nicely embossed. For some reason the keystone Mason jars are often weekly embossed. Also, the quart is much rarer than the 1/2 gallon amber jar. This jar was found in an estate sale in Auburn. We should all be so lucky.","image":"images/keystone.jpg"},{"name":"The Lincoln Jar","description":"This is a fine example of a aqua quart Lincoln jar. It is super crude and the embossing just jumps off the jar. These jars have been found mostly in Northern California. This jar is no exception and was found while a shopping mall was being built in San Jose. A jar with an original lid has not been found.","image":"images/lincoln.jpg"},{"name":"M. Seller & Co. Portland, O.","description":"This deep aqua 1/2 gallon M. Sellers jar is in mint condition. I doubt that it was ever used because there is not even a nick on the wax channel. This jar was made from a reworked \"San Francisco Glass Works\" mold. The jar was likely produced by the San Francisco Glass Works. M Seller was a crockery and glassware dealer in Portland, Oregon. This jar is very scarce.","image":"images/m_sellers.jpg"},{"name":"Medium Cobalt F.C.G. Co.","description":"This is a medium cobalt blue half gallon FCG jar. This jar is extermely rare in the 1/2 gallon size.","image":"images/medium_cobalt_fcg_half_gal.jpg"},{"name":"Green Petal Jar","description":"Nice crude quart deep green petal jar with an iron pontil. This one has ten (10) petals on it.  I bought this one along with a black Mason 1858 and a Airtight jar.  Problem was my wife was several months pregnant with our first child.  Needless to say this was the closest that we came to divorce, ha, ha.","image":"images/petal_jar.jpg"},{"name":"Pint The Automatic Sealer","description":"","image":"images/pint_automatic_sealer.jpg"},{"name":"Pint The Champion Pat. Aug 31 1869","description":"This jar is tough to find in the pint size.","image":"images/pint_champion.jpg"},{"name":"Pint Gilberds Improved (star) Jar","description":"This is another jar that is tough to find in the pint size.","image":"images/pint_gilberds_star.jpg"},{"name":"Pint The Puritan, L S Co (reverse)","description":"The jar has the orignal ramped iron ring and wire clamp.","image":"images/pint_puritan.jpg"},{"name":"Pint The Winslow Improved Valve Jar","description":"This very rare pint aqua jar comes with an original closure.","image":"images/pint_winslow_improved_valve.jpg"},{"name":"Preserves jar","description":"The Preserve jar is fairly scarce.  It takes an unlined zinc lid and is a nice example.","image":"images/preserve.jpg"},{"name":"Lafayette jar","description":"This is a quart Lafayette jar which has the profile of Lafayette.  Fruit jars rarely had pictures on them.","image":"images/profile_lafayette.jpg"},{"name":"Retentive jar","description":"This aqua quart jar is unique in that the embossed goes vertically on the jar. This jar was made in Maine, but was found at a antique show in San Jose area. The dealer had clay marbles in the jar and did not want to sell it.  I found a place for the marbles and got the jar.  It has the original lid, which is tough to find and a repo wire clamp. I would love to find an original wire clamp for this jar.","image":"images/retentive_jar.jpg"},{"name":"Half pint Woodbury WGW (monogram)","description":"This aqua half pint was a salesman sample jar. This is the only one that I have ever seen. I am told that it is possibly a \"one of a kind\" jar. If you have one of these would appreciate an email.","image":"images/sales_sample_woodbury.jpg"},{"name":"The Schaffer Jar Rochester N.Y. (JCS monogram on reverse)","description":"This is a quart size jar and has an unusual dome shaped lid.  It is a very crude jar and very whittled.","image":"images/schaffer.jpg"},{"name":"The Smalley Jar","description":"The Smalley has an unusual dome shaped lid.  This one is a quart size.","image":"images/smalley.jpg"},{"name":"Spratts Patent July 18 1854 Wells & Provost","description":"Spratts Patent Improved July 18th 54 Wells & Provost Proprietors, N.Y.","image":"images/spratt_cans.jpg"},{"name":"The Chief","description":"This aqua quart jar has a couple of bites out of the mouth area of jar. It also has a repo closure.","image":"images/the_chief.jpg"},{"name":"Mason (shield) Union","description":"This aqua quart jar has a really nice original lid on it. There are 18 stars on the shield on the lid.","image":"images/union.jpg"},{"name":"Van Vliet Improved jar","description":"I am not sure how they improved the Van Vliet Improved jar.  The closure is similar the Van Vliet jar.  I ma surprised that the values on the this jar are not higher.  It is much rarer than the jar with improved on it.","image":"images/jerrys_jars_009.jpg"},{"name":"Belle jar","description":"I recently upgraded my Belle jar to this one with an original closure.  The jar is unusual because it has small glass feet on the bottom.  This jar is tough to find with the original closure, thanks Jim!","image":"images/jerrys_jars_010.jpg"},{"name":"Mason 1858 (Crowlytown)","description":"Here is a Mason 1858 (Crowlytown style) with an original lid.","image":"images/jerrys_jars_011.jpg"},{"name":"Empire jar.","description":"The quart Empire jar comes with an original closure.  Another tough closure to find and I will not lose this one.  It is stuck in the jar.  A shot of the lid is in another picture.","image":"images/jerrys_jars_012.jpg"},{"name":"Scranton jar","description":"Now the Scranton jar has a really unusual closure.  There is a wooden roller as part of the closing contraption.  A very nice example and all original.","image":"images/jerrys_jars_014.jpg"},{"name":"Lightning green pint","description":"The picture does not do this pint Lightning justice.  The jar is green with no amber in it.","image":"images/jerrys_jars_015.jpg"},{"name":"Buckeye pint","description":"Here is another crude jar.  It is a Buckeye pint jar.  I got this one at the National show in York.  It was a great trip even without adding this little beauty.  I do need a clamp for this one.  Email me if you have one.","image":"images/jerrys_jars_016.jpg"},{"name":"ABC pint jar","description":"This ABC pint jar has an original closure.","image":"images/jerrys_jars_017.jpg"},{"name":"Household W.T.Co Fruit Jar","description":"This is another tough one to find.  They are clear jars and have a simple screw down closure.","image":"images/jerrys_jars_018.jpg"},{"name":"Excelsior (reverse basket of fruit)","description":"The Excelsior has a milk bottle type shape.  I thought they were clever to put the basket of fruit on the back of the jar.  This one is clear in color.","image":"images/jerrys_jars_019.jpg"},{"name":"The Best jar","description":"This is the third style of Best jar that I added to my collection.  This one has a glass stopper and screws into mouth of the jar.  I also have the Best jar that takes a wooden wedge and one marked only on the lid with waxed string to seal.  so do I have the \"best\" jar, of course I do, ha, ha.","image":"images/jerrys_jars_020.jpg"},{"name":"A.&D.H. Chambers jar","description":"The jar is not that scarce.  I do have the original tin lid for it.  I would like to put it on a cornflower blue example of this jar.","image":"images/jerrys_jars_021.jpg"},{"name":"lid for A.&D.H. Chambers jar","description":"I like this lid.","image":"images/jerrys_jars_022.jpg"},{"name":"J.C. Lefferts metal jar","description":"This Lefferts example has wording on three lines.  It is more common for wording to be on four lines.  This is the only cast iron jar that I am aware of.  It is lined with vitreous enamel.  Seems like a lot of effort to make something just to can fruit in.","image":"images/jerrys_jars_023.jpg"},{"name":"Mason's Pat. June 2, 1857 (on lid)","description":"This may be a early product jar.  It is only 2 ounces and is a clear jar.  It has a very nice brass lid.  See the next picture.","image":"images/jerrys_jars_024.jpg"},{"name":"picture of lid for Mason's Pat. June 2, 1857 jar","description":"Here is the lid for the 2 ounce jar.","image":"images/jerrys_jars_025.jpg"},{"name":"picture of Empire jar lid","description":"This is a very nice original lid for the Empire.  There just a few known.","image":"images/jerrys_jars_026.jpg"},{"name":"Packed by Collins, Wheaton & Luhrs, S.F jar","description":"This is a rare California jar.  Luhr also did business in Sacramento (old Sac).","image":"images/jerrys_jars_027.jpg"},{"name":"Pacific Glassworks San Francisco","description":"Here is a quart Pacific Glassworks San Francisco jar in a nice green color.  The lid matches it very well.","image":"images/2015-12-23_22.56.00.jpg"},{"name":"Cutting and Co","description":"Cutting and Co San Francisco quart.","image":"images/2015-12-23_22.57.42.jpg"},{"name":"Dodge Sweeney & Co's California Butter","description":"Here is a Dodge Sweeney & Co's California Butter jar.  It looks larger than a quart, but don't think it is a half gallon.  Nice deep aqua color.","image":"images/2015-12-23_22.58.13.jpg"},{"name":"M Seller & Co Portland O","description":"Here is a quart M Seller & Co Portland O jar.  Nice example of this rare Western jar.","image":"images/2015-12-23_22.59.40.jpg"},{"name":"Pacific Glassworks jars","description":"Here are a couple of Pacific Glassworks jars.  The one with SF is the rarer of the two.","image":"images/2015-12-23_23.00.19.jpg"},{"name":"Trademark The Dandy","description":"This quart Dandy jar is in a nice yellow amber color.","image":"images/2015-12-23_23.04.51.jpg"},{"name":"Globe","description":"This quart Globe is in a nice olive green color.  Tons of tiny bubbles in the glass and a beautiful example.","image":"images/2015-12-23_23.05.13.jpg"},{"name":"Jersey","description":"Nice example of a pint Jersey jar.","image":"images/2015-12-23_23.06.12.jpg"},{"name":"Potter & Bodine Airtight Fruit Jar","description":"Here is a pint Potter & Bodine Airtight Fruit Jar.  This one was donated to a junk shop in Santa Rosa along with some Civil War items.  An excellent example of this rare jar.","image":"images/2015-12-23_23.06.34.jpg"},{"name":"A Stone & Co","description":"Here is a pint A Stone & Co.  Thanks Dan for the lid.","image":"images/2015-12-23_23.06.51.jpg"},{"name":"Green Flaccus","description":"Here is a dark green Flaccus with the one piece lid.  This one was in Stoney Stone's collection.  One of my good jar buddies.  Stoney passed away in 2015.","image":"images/2015-12-23_23.07.20.jpg"},{"name":"1/2 gal green Petal jar","description":"A nice dark green 1/2 gal Petal jar.  This jar was found in a barn in Northern California near the town of Redding.","image":"images/2015-12-23_23.09.21.jpg"},{"name":"Gallon Retentive jar","description":"This is a nice gallon size Retentive jar.  First one that I have seen and was happy to get it.","image":"images/2015-12-23_23.10.04.jpg"},{"name":"Gallon Retentive jar","description":"Another shot of the gallon Retentive jar.  It is nicely embossed vertically up the jar.  I also have a quart.  Would like to get a pint some day.","image":"images/2015-12-23_23.10.22.jpg"},{"name":"Standard","description":"Here is a half gallon Standard jar in a nice blue color.","image":"images/2015-12-23_23.10.50.jpg"},{"name":"The Alston","description":"The Alston jar is one of the few clear jars in my collection.  It has the original lid with the wax still under the cap.","image":"images/2015-12-23_23.11.19.jpg"},{"name":"OK jar","description":"This quart OK jar is whittled and has swirls running through it.  Very crude it also has some sots of amber color at top of jar.","image":"images/2015-12-24_00.16.04.jpg"},{"name":"Reservoir Jar of 1876","description":"At 1 1/4 oz this is the smallest fruit jar.  This Reservoir jar was made as a souvenir of the 1876 Centennial Expostition at Philadelphia.  Posted a second picture of the lid.","image":"images/2015-12-24_00.18.15.jpg"},{"name":"Reservoir lid","description":"Here is the lid on the small Reservoir jar. It is marked Ella Hallers Patent with a star in center.","image":"images/2015-12-24_00.18.26.jpg"},{"name":"Mason Fruit Jar","description":"This amber pint Mason Fruit Jar is found in the West.","image":"images/2015-12-24_00.20.28.jpg"},{"name":"The Best Jar Pat Pend","description":"This Best jar is marked on the glass stopper.  The jar is unmarked and in a milk bottle like shape.  The jar is pretty rare and this one still has the original string on the glass stopper.","image":"images/2015-12-24_00.21.10.jpg"},{"name":"Mason (keystone above Mason)","description":"This amber quart is fairly rare.  I found this one in a basement of an antique store in my home town of Clovis, CA.","image":"images/2015-12-24_00.22.58.jpg"},{"name":"The Best jar","description":"The Best jar is the one that got me started collecting fruit jars.  I found this one at a garage sale in San Jose in the 1980's and got it for $8.  It has the correct lid and clamp and takes a wooden wedge.  The clamp is as rare as \"hens teeth\".  a big thanks to Randy for helping me complete the jar with the clamp.","image":"images/2015-12-24_00.54.03.jpg"},{"name":"Ladies Favorite","description":"This is a fine example in a quart size.  I got from Jim Byrd a long time ago.  It has a nice Willoughby stopple marked JD Willoughbys Patd Jan 4 1859. It has heavy crude mouth that is 2 3/8 inch wide.  Needless to say this is one of my \"favorite\" jars.","image":"images/2015-12-24_00.59.59.jpg"},{"name":"Van Vliet pint","description":"The Van Vliet is hard to find in pint size.  It has the original closure, thank you Dan.","image":"images/2015-12-24_01.18.12.jpg"},{"name":"A Stone & Co Philada Manufactured by Cunningham & Co","description":"This is a nice deep aqua pint that is very crude and has manufacturers name on it.  From the Stoney Stone collection.","image":"images/2015-12-24_01.18.39.jpg"},{"name":"Cutting & Co San Francisco","description":"Here is another picture of my quart Cutting & Co San Francisco jar.  Nice crude jar with lots of character.","image":"images/2015-12-24_01.30.47.jpg"}];
+
+const grid = document.getElementById('jar-grid');
+const countEl = document.getElementById('jar-count');
+const search = document.getElementById('search');
+const backdrop = document.getElementById('modal-backdrop');
+const modalImg = document.getElementById('modal-img');
+const modalName = document.getElementById('modal-name');
+const modalDesc = document.getElementById('modal-desc');
+const closeBtn = document.getElementById('modal-close-btn');
+
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderGrid(jars) {
+  countEl.textContent = jars.length + ' jar' + (jars.length === 1 ? '' : 's');
+  if (jars.length === 0) {
+    grid.innerHTML = '<div class="no-results">No jars matched your search.</div>';
+    return;
+  }
+  grid.innerHTML = jars.map((j, i) => `
+    <div class="jar-card" tabindex="0" role="button" aria-label="${esc(j.name)}" data-index="${i}">
+      <img src="${esc(j.image)}" alt="${esc(j.name)}" loading="lazy">
+      <div class="jar-card-body">
+        <div class="jar-card-name">${esc(j.name)}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Attach click handlers using event delegation
+}
+
+// Filtered list for modal navigation
+let currentList = [...JARS];
+
+function openModal(jar) {
+  modalImg.src = jar.image;
+  modalImg.alt = jar.name;
+  modalName.textContent = jar.name;
+  modalDesc.textContent = jar.description || '';
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  closeBtn.focus();
+}
+
+function closeModal() {
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+grid.addEventListener('click', e => {
+  const card = e.target.closest('.jar-card');
+  if (!card) return;
+  const idx = parseInt(card.dataset.index);
+  openModal(currentList[idx]);
+});
+
+grid.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    const card = e.target.closest('.jar-card');
+    if (card) { e.preventDefault(); card.click(); }
+  }
+});
+
+closeBtn.addEventListener('click', closeModal);
+
+backdrop.addEventListener('click', e => {
+  if (e.target === backdrop) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+function filter(query) {
+  const q = query.trim().toLowerCase();
+  currentList = q ? JARS.filter(j =>
+    j.name.toLowerCase().includes(q) || j.description.toLowerCase().includes(q)
+  ) : [...JARS];
+  renderGrid(currentList);
+}
+
+search.addEventListener('input', e => filter(e.target.value));
+
+// Initial render
+renderGrid(JARS);
+</script>
+
+</body>
+</html>
