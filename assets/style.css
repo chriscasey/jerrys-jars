@@ -342,7 +342,7 @@ main.collection-main {
 .modal {
   background: var(--white);
   border-radius: var(--radius);
-  max-width: 700px;
+  max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -353,7 +353,7 @@ main.collection-main {
 
 .modal-img {
   width: 100%;
-  max-height: 360px;
+  max-height: 560px;
   object-fit: contain;
   background: var(--aqua-light);
   padding: 1.5rem;
