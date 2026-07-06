@@ -39,7 +39,11 @@
 <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-name">
   <div class="modal" id="modal">
     <div class="modal-close"><button id="modal-close-btn" aria-label="Close">&times;</button></div>
-    <img class="modal-img" id="modal-img" src="" alt="">
+    <div class="modal-img-wrap">
+      <button class="modal-nav modal-prev" id="modal-prev" aria-label="Previous jar">&#8249;</button>
+      <img class="modal-img" id="modal-img" src="" alt="">
+      <button class="modal-nav modal-next" id="modal-next" aria-label="Next jar">&#8250;</button>
+    </div>
     <div class="modal-body">
       <h2 class="modal-name" id="modal-name"></h2>
       <p class="modal-desc" id="modal-desc"></p>
@@ -62,6 +66,8 @@ const modalImg = document.getElementById('modal-img');
 const modalName = document.getElementById('modal-name');
 const modalDesc = document.getElementById('modal-desc');
 const closeBtn = document.getElementById('modal-close-btn');
+const prevBtn = document.getElementById('modal-prev');
+const nextBtn = document.getElementById('modal-next');
 
 function esc(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -81,18 +87,20 @@ function renderGrid(jars) {
       </div>
     </div>
   `).join('');
-
-  // Attach click handlers using event delegation
 }
 
-// Filtered list for modal navigation
 let currentList = [...JARS];
+let currentIndex = 0;
 
-function openModal(jar) {
+function openModal(index) {
+  currentIndex = index;
+  const jar = currentList[index];
   modalImg.src = jar.image;
   modalImg.alt = jar.name;
   modalName.textContent = jar.name;
   modalDesc.textContent = jar.description || '';
+  prevBtn.disabled = index === 0;
+  nextBtn.disabled = index === currentList.length - 1;
   backdrop.classList.add('open');
   document.body.style.overflow = 'hidden';
   closeBtn.focus();
@@ -106,8 +114,7 @@ function closeModal() {
 grid.addEventListener('click', e => {
   const card = e.target.closest('.jar-card');
   if (!card) return;
-  const idx = parseInt(card.dataset.index);
-  openModal(currentList[idx]);
+  openModal(parseInt(card.dataset.index));
 });
 
 grid.addEventListener('keydown', e => {
@@ -117,6 +124,14 @@ grid.addEventListener('keydown', e => {
   }
 });
 
+prevBtn.addEventListener('click', () => {
+  if (currentIndex > 0) openModal(currentIndex - 1);
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentIndex < currentList.length - 1) openModal(currentIndex + 1);
+});
+
 closeBtn.addEventListener('click', closeModal);
 
 backdrop.addEventListener('click', e => {
@@ -124,7 +139,10 @@ backdrop.addEventListener('click', e => {
 });
 
 document.addEventListener('keydown', e => {
+  if (!backdrop.classList.contains('open')) return;
   if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowLeft' && currentIndex > 0) openModal(currentIndex - 1);
+  if (e.key === 'ArrowRight' && currentIndex < currentList.length - 1) openModal(currentIndex + 1);
 });
 
 function filter(query) {
