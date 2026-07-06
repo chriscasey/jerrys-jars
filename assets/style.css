@@ -20,6 +20,8 @@
 
 html { scroll-behavior: smooth; }
 
+h1, h2, h3 { font-family: 'Lora', Georgia, serif; }
+
 body {
   font-family: Georgia, 'Times New Roman', serif;
   background: var(--cream);
